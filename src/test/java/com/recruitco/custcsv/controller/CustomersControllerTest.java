@@ -43,24 +43,21 @@ public class CustomersControllerTest {
 	private CustomerRepository customerRepository;
 
 	@Test
-	public void getCustomers() throws IOException, Exception {
-		
-		mvc.perform(MockMvcRequestBuilders
-	  			.get("/customers/getAll")
-	  			.accept(MediaType.APPLICATION_JSON))
-	      .andDo(print())
-	      .andExpect(status().isOk())	
-	      .andExpect(MockMvcResultMatchers.jsonPath("$.customer").exists());
-	      //.andExpect(MockMvcResultMatchers.jsonPath("$.customers[*].customerRef").isNotEmpty());
+	public void getCustomer() throws IOException, Exception {
+
+		mvc.perform(MockMvcRequestBuilders.get("/customers/Food Customer").accept(MediaType.APPLICATION_JSON))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("customerRef").value("Food Customer"))
+				.andExpect(MockMvcResultMatchers.jsonPath("customerName").value("Southern Food"));
 	}
-	
+
 	@Test
 	public void whenValidInput_thenCreateCustomer() throws IOException, Exception {
 		Customer customer = new Customer("shipping", "EU Supplies", "Building 1", "Factory Steet", "Burnley",
 				"Lancashire", "UK", "BRN 433");
-		
-		mvc.perform(
-				post("/customers/create").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(customer)));
+
+		mvc.perform(post("/customers/create").contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(customer)));
 		Customer found = customerRepository.findByCustomerRef("shipping");
 		assertThat(found.getCustomerName().equals(customer.getCustomerName())).isTrue();
 	}

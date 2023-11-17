@@ -50,8 +50,8 @@ public class CustomerCSVApplication {
 			Stream.of(
 					new Customer("Transport Customer", "EU Supplies", "Building 1", "Factory Steet", "Burnley",
 							"Lancashire", "UK", "BRN 433"),
-					new Customer("Food Customer", "Southern Food", "Building 3", "New Steet", "Woking",
-							"Surrey", "UK", "SUR 563"))
+					new Customer("Food Customer", "Southern Food", "Building 3", "New Steet", "Woking", "Surrey", "UK",
+							"SUR 563"))
 					.forEach(customer -> {
 						customerRepository.save(customer);
 					});
